@@ -1,0 +1,37 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.ant-layout-header h2 {
+  color: #001529;
+  margin: 0;
+}
+
+.stat-card {
+  margin-bottom: 24px;
+}
+
+.chart-container {
+  height: 400px;
+}
+
+.data-table {
+  margin-top: 16px;
+}
+
+.config-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
