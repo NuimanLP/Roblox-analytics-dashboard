@@ -3,6 +3,7 @@ import { Table, Card, DatePicker, Select, Button, Space, Spin, Typography, Row, 
 import { ReloadOutlined, DownloadOutlined } from '@ant-design/icons';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { getEvents } from '../../api';
+import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
@@ -23,7 +24,7 @@ const Events = () => {
 
   const fetchData = () => {
     setLoading(true);
-    console.log('Fetching event data...');
+    console.log('Fetching event data with filters:', { eventType, dateRange });
     
     // Simulating API call
     setTimeout(() => {
@@ -31,11 +32,25 @@ const Events = () => {
       const eventTypes = ['Game Start', 'Level Complete', 'Item Collected', 'Enemy Defeated', 'Game Over'];
       const chartDataTemp = eventTypes.map(type => ({ name: type, count: Math.floor(Math.random() * 5000) + 1000 }));
       
+      // Generate random timestamps within the last 30 days
+      const now = new Date();
+      const thirtyDaysAgo = new Date(now);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      
       for (let i = 0; i < 100; i++) {
         const randomEvent = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+        const randomTimestamp = new Date(thirtyDaysAgo.getTime() + Math.random() * (now.getTime() - thirtyDaysAgo.getTime()));
+        
+        // Format dates for storage in MM-DD-YYYY format
+        const month = String(randomTimestamp.getMonth() + 1).padStart(2, '0');
+        const day = String(randomTimestamp.getDate()).padStart(2, '0');
+        const year = randomTimestamp.getFullYear();
+        const formattedDate = `${month}-${day}-${year}`;
+        
         mockData.push({
           id: i,
-          timestamp: new Date(Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)).toISOString(),
+          timestamp: randomTimestamp.toISOString(),
+          date: formattedDate, // Store the formatted date
           eventType: randomEvent,
           playerId: `Player_${Math.floor(Math.random() * 1000)}`,
           data: JSON.stringify({
@@ -49,14 +64,50 @@ const Events = () => {
         });
       }
       
-      // Filter based on event type if specified
-      const filteredData = eventType !== 'all' 
-        ? mockData.filter(item => item.eventType === eventType)
-        : mockData;
+      // Apply filters
+      let filteredData = mockData;
+      
+      // Filter by event type if specified
+      if (eventType !== 'all') {
+        filteredData = filteredData.filter(item => item.eventType === eventType);
+      }
+      
+      // Filter by date range if specified
+      if (dateRange && dateRange[0] && dateRange[1]) {
+        // Convert dates properly - Ant Design v5 uses dayjs
+        const startDate = dateRange[0].startOf('day').toDate();
+        const endDate = dateRange[1].endOf('day').toDate();
+        
+        filteredData = filteredData.filter(item => {
+          const eventDate = new Date(item.timestamp);
+          return eventDate >= startDate && eventDate <= endDate;
+        });
+        
+        // Update chart data based on filtered events
+        const eventCounts = {};
+        eventTypes.forEach(type => eventCounts[type] = 0);
+        
+        filteredData.forEach(item => {
+          eventCounts[item.eventType] = (eventCounts[item.eventType] || 0) + 1;
+        });
+        
+        // Create updated chart data with counts from filtered events
+        const updatedChartData = eventTypes.map(type => ({
+          name: type,
+          count: eventCounts[type] * 50 // Scaling for better visualization
+        }));
+        
+        setChartData(updatedChartData);
+      } else {
+        setChartData(chartDataTemp);
+      }
       
       setEventData(filteredData);
-      setChartData(chartDataTemp);
-      console.log('Event data loaded:', { filteredData, chartDataTemp });
+      console.log('Event data loaded:', { 
+        filtered: filteredData.length, 
+        total: mockData.length,
+        dateRange: dateRange ? `${dateRange[0]?.format('MM-DD-YYYY')} to ${dateRange[1]?.format('MM-DD-YYYY')}` : 'none' 
+      });
       setLoading(false);
     }, 1000);
   };
@@ -73,11 +124,21 @@ const Events = () => {
 
   const columns = [
     {
-      title: 'Timestamp',
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+      sorter: (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
+    },
+    {
+      title: 'Time',
       dataIndex: 'timestamp',
       key: 'timestamp',
-      sorter: (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
-      render: text => new Date(text).toLocaleString()
+      render: text => {
+        const date = new Date(text);
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+      }
     },
     {
       title: 'Event Type',
