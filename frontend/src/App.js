@@ -4,13 +4,11 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
   DashboardOutlined,
   BarChartOutlined,
-  UserOutlined,
-  SettingOutlined
+  UserOutlined
 } from '@ant-design/icons';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Events from './pages/Events/Events';
 import Players from './pages/Players/Players';
-import Configuration from './pages/Configuration/Configuration';
 import './App.css';
 
 // Import Ant Design styles
@@ -34,12 +32,7 @@ function App() {
       key: '3',
       icon: <UserOutlined />,
       label: <Link to="/players">Players</Link>,
-    },
-    {
-      key: '4',
-      icon: <SettingOutlined />,
-      label: <Link to="/configuration">Configuration</Link>,
-    },
+    }
   ];
 
   return (
@@ -73,7 +66,6 @@ function App() {
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/events" element={<Events />} />
                   <Route path="/players" element={<Players />} />
-                  <Route path="/configuration" element={<Configuration />} />
                 </Routes>
               </div>
             </Content>

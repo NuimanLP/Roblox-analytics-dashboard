@@ -125,47 +125,5 @@ export const getPlayerStats = () => {
   });
 };
 
-// Configuration
-export const getConfiguration = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        // Game Settings
-        gameId: '12345678',
-        apiKey: 'sk_test_*************',
-        dataRetentionDays: 90,
-        samplingRate: 100,
-        
-        // Event Settings
-        capturePlayerJoin: true,
-        capturePlayerLeave: true,
-        captureGameStart: true,
-        captureGameEnd: true,
-        captureCustomEvents: true,
-        maxEventsPerMinute: 5000,
-        
-        // Player Tracking Settings
-        trackDeviceInfo: true,
-        trackLocation: false,
-        trackPlaytime: true,
-        playerIdType: 'anonymous',
-        
-        // Dashboard Settings
-        refreshInterval: 5,
-        theme: 'light',
-        publicAccess: true
-      });
-    }, 800);
-  });
-};
-
-export const saveConfiguration = (config) => {
-  return new Promise((resolve) => {
-    console.log('Saving configuration:', config);
-    setTimeout(() => {
-      resolve({ success: true });
-    }, 1500);
-  });
-};
 
 export default api;
