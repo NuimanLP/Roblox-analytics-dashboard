@@ -38,16 +38,16 @@ function App() {
       label: <Link to="/events">Events</Link>,
     },
 
-    {
-      key: '3',
-      icon: <WarningOutlined />,
-      label: <Link to="/tests">Tests</Link>,
-    },
-    {
-      key: '4',
-      icon: <WarningOutlined />,
-      label: <Link to="/tests2">Tests2</Link>,
-    }
+    // {
+    //   key: '3',
+    //   icon: <WarningOutlined />,
+    //   label: <Link to="/tests">Tests</Link>,
+    // },
+    // {
+    //   key: '4',
+    //   icon: <WarningOutlined />,
+    //   label: <Link to="/tests2">Tests2</Link>,
+    // }
   ];
 
   return (
@@ -81,8 +81,8 @@ function App() {
                   {/* <Route path="/" element={<Dashboard />} /> */}
                   <Route path="/events" element={<Events />} />
                   <Route path="/players" element={<Players />} />
-                  <Route path="/tests" element={<SimpleTest />} />
-                  <Route path="/tests2" element={<SimpleTest2 />} />
+                  {/* <Route path="/tests" element={<SimpleTest />} />
+                  <Route path="/tests2" element={<SimpleTest2 />} /> */}
                 </Routes>
               </div>
             </Content>
