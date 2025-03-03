@@ -2,16 +2,14 @@ import React from 'react';
 import { Layout, Menu, ConfigProvider } from 'antd';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
-  DashboardOutlined,
   BarChartOutlined,
   UserOutlined,
-  WarningOutlined
 } from '@ant-design/icons';
 // import Dashboard from './pages/Dashboard/Dashboard';
 import Events from './pages/Events/Events';
 import Players from './pages/Players/Players';
-import SimpleTest from './test.js'
-import SimpleTest2 from './test2'
+// import SimpleTest from './test.js'
+// import SimpleTest2 from './test2'
 
 import './App.css';
 
