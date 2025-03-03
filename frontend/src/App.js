@@ -7,10 +7,10 @@ import {
   UserOutlined,
   WarningOutlined
 } from '@ant-design/icons';
-import Dashboard from './pages/Dashboard/Dashboard';
+// import Dashboard from './pages/Dashboard/Dashboard';
 import Events from './pages/Events/Events';
 import Players from './pages/Players/Players';
-import SimpleTest from './test'
+import SimpleTest from './test.js'
 import SimpleTest2 from './test2'
 
 import './App.css';
@@ -22,28 +22,29 @@ const { Header, Content, Footer, Sider } = Layout;
 
 function App() {
   const items = [
+    // {
+    //   key: '1',
+    //   icon: <DashboardOutlined />,
+    //   label: <Link to="/">Dashboard</Link>,
+    // },
     {
       key: '1',
-      icon: <DashboardOutlined />,
-      label: <Link to="/">Dashboard</Link>,
+      icon: <UserOutlined />,
+      label: <Link to="/players">Players</Link>,
     },
     {
       key: '2',
       icon: <BarChartOutlined />,
       label: <Link to="/events">Events</Link>,
     },
+
     {
       key: '3',
-      icon: <UserOutlined />,
-      label: <Link to="/players">Players</Link>,
-    },
-    {
-      key: '4',
       icon: <WarningOutlined />,
       label: <Link to="/tests">Tests</Link>,
     },
     {
-      key: '5',
+      key: '4',
       icon: <WarningOutlined />,
       label: <Link to="/tests2">Tests2</Link>,
     }
@@ -77,7 +78,7 @@ function App() {
             <Content style={{ margin: '24px 16px 0' }}>
               <div style={{ padding: 24, minHeight: 360, background: '#fff' }}>
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
+                  {/* <Route path="/" element={<Dashboard />} /> */}
                   <Route path="/events" element={<Events />} />
                   <Route path="/players" element={<Players />} />
                   <Route path="/tests" element={<SimpleTest />} />

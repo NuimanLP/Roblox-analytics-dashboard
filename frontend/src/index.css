@@ -5,9 +5,63 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f7fa;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Player Analytics Dashboard Custom Styles */
+
+.player-analytics-container {
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* Stat Card Hover Effect */
+.stat-card {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Chart Cards */
+.chart-card {
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Player Table Row Hover */
+.player-table-row {
+  transition: all 0.2s ease;
+}
+
+.player-table-row:hover {
+  background-color: #f0f7ff !important;
+}
+
+/* Player Cards */
+.player-card {
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.player-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .player-analytics-container {
+    padding: 16px;
+  }
 }

@@ -13,7 +13,7 @@ export default function SimpleTest() {
     async function fetchData() {
       try {
         
-        const querySnapshot = await getDocs(collection(db, "players"));
+        const querySnapshot = await getDocs(collection(db, "events"));
         const docs = [];
         querySnapshot.forEach((doc) => {
           docs.push({ id: doc.id, ...doc.data() });
