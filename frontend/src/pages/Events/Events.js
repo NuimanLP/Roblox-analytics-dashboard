@@ -110,22 +110,27 @@ const Events = () => {
     setError(null);
     
     try {
-      // Fetch players data first
+      // Define both queries
       const playersQuery = query(collection(db, "players"));
-      const playersSnapshot = await getDocs(playersQuery);
+      const eventsQuery = query(collection(db, "events"), orderBy("timeStamp", "desc"));
       
+      // Execute both queries in parallel using Promise.all for real concurrency NA
+      console.time('Concurrent Firestore queries');
+      const [playersSnapshot, eventsSnapshot] = await Promise.all([
+        getDocs(playersQuery),
+        getDocs(eventsQuery)
+      ]);
+      console.timeEnd('Concurrent Firestore queries');
+      
+      // Process players data
       const players = {};
       playersSnapshot.forEach((doc) => {
         players[doc.id] = { id: doc.id, ...doc.data() };
       });
       
-      console.log('Fetched players from Firestore:', players);
-      // setPlayerData(players);
+      console.log('Processed players from Firestore:', Object.keys(players).length);
       
-      // Fetch events data
-      const eventsQuery = query(collection(db, "events"), orderBy("timeStamp", "desc"));
-      const eventsSnapshot = await getDocs(eventsQuery);
-      
+      // Process events data
       const eventsData = [];
       eventsSnapshot.forEach((doc) => {
         const eventData = { id: doc.id, ...doc.data() };
@@ -138,7 +143,7 @@ const Events = () => {
         eventsData.push(eventData);
       });
       
-      console.log('Fetched events from Firestore:', eventsData);
+      console.log('Processed events from Firestore:', eventsData.length);
       setEventData(eventsData);
       
       // Process initial data 
@@ -151,7 +156,6 @@ const Events = () => {
       console.error('Error fetching data from Firestore:', err);
       setError('Failed to fetch data from Firestore. Please check your connection and try again.');
       setEventData([]);
-      // setPlayerData([]);
       setChartData([]);
       setDeviceData([]);
       setHourlyData([]);
