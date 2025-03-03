@@ -20,11 +20,11 @@ const { Header, Content, Footer, Sider } = Layout;
 
 function App() {
   const items = [
-    {
-      key: '1',
-      icon: <DashboardOutlined />,
-      label: <Link to="/">Dashboard</Link>,
-    },
+    // {
+    //   key: '1',
+    //   icon: <DashboardOutlined />,
+    //   label: <Link to="/">Dashboard</Link>,
+    // },
     {
       key: '1',
       icon: <UserOutlined />,
